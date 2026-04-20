@@ -236,7 +236,7 @@
 
 /* Mobile Responsive */
 @media (max-width: 768px) {
-    #vp-container { width: 100vw; height: 100vh; max-height: none; top: 0; left: 0; transform: none; border-radius: 0; padding: 0; gap: 0; }
+    #vp-container { width: 90vw; height: 80vh; max-height: none; top: 0; left: 0; transform: none; border-radius: 15; padding: 0; gap: 0; }
     #vp-phone-wrapper { border-radius: 0; }
     #vp-screen { border-radius: 0; }
     #vp-global-export { border-radius: 0; }
