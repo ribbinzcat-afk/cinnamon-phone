@@ -23,7 +23,7 @@
     justify-content: center;
     align-items: center;
     cursor: pointer;
-    z-index: 9000;
+    z-index: 999999;
     transition: background-color 0.3s, transform 0.2s;
     font-size: 24px;
     color: #333;
@@ -65,7 +65,7 @@
     background-color: #000;
     border-radius: 40px;
     box-shadow: 0 20px 40px rgba(0,0,0,0.3);
-    z-index: 9001;
+    z-index: 99999;
     display: none;
     padding: 10px;
     font-family: var(--vp-font);
