@@ -9,12 +9,12 @@
     --vp-border: rgba(255,255,255,0.2);
 }
 
-/* Floating Button (Draggable) */
+/* Floating Button (Draggable & ไม่ทะลุขอบ) */
 #vp-floating-btn {
-    position: fixed; top: 50%; right: 20px;
+    position: fixed; top: 50%; right: 20%; /* ขยับเข้ามาตรงกลางมากขึ้น */
     width: 60px; height: 60px;
     background-color: var(--vp-bg); border-radius: 50%;
-    box-shadow: 0 4px 12px rgba(0,0,0,0.15);
+    box-shadow: 0 4px 12px rgba(0,0,0,0.3);
     display: flex; justify-content: center; align-items: center;
     cursor: grab; z-index: 9000; font-size: 24px; color: #333;
 }
@@ -29,10 +29,10 @@
     display: none; justify-content: center; align-items: center; font-weight: bold;
 }
 
-/* Phone Container */
+/* Phone Container (ยืดหดตามจอ) */
 #vp-container {
     position: fixed; top: 5vh; left: 50%; transform: translateX(-50%);
-    width: 360px; height: 85vh; max-height: 850px; min-height: 500px;
+    width: 360px; height: 85vh; max-height: 900px; min-height: 500px; /* ยืดหดตามเบราว์เซอร์ */
     background-color: #000; border-radius: 40px;
     box-shadow: 0 20px 40px rgba(0,0,0,0.3); z-index: 9001;
     display: none; padding: 10px; font-family: var(--vp-font);
@@ -44,22 +44,15 @@
 }
 
 /* Notch & Header */
-.vp-header {
-    height: 30px; width: 100%; position: absolute; top: 0; left: 0;
-    z-index: 20; cursor: grab; display: flex; justify-content: center;
-}
+.vp-header { height: 30px; width: 100%; position: absolute; top: 0; left: 0; z-index: 20; cursor: grab; display: flex; justify-content: center; }
 .vp-notch { width: 120px; height: 25px; background-color: #000; border-bottom-left-radius: 15px; border-bottom-right-radius: 15px; }
 
 /* App Views */
-.vp-app-view { display: none; width: 100%; height: 100%; flex-direction: column; background-size: cover; background-position: center; color: #fff; }
+.vp-app-view { display: none; width: 100%; height: 100%; flex-direction: column; background-size: cover; background-position: center; color: #fff; position: relative; }
 .vp-app-view.active { display: flex; }
 
-/* Top Nav (ขยายเต็มขอบบน) */
-.vp-top-nav {
-    display: flex; align-items: center; padding: 40px 15px 10px 15px; /* คลุม Notch */
-    background: rgba(255, 255, 255, 0.15); backdrop-filter: blur(15px);
-    border-bottom: 1px solid var(--vp-border); color: #fff; z-index: 10;
-}
+/* Top Nav */
+.vp-top-nav { display: flex; align-items: center; padding: 40px 15px 10px 15px; background: rgba(255, 255, 255, 0.15); backdrop-filter: blur(15px); border-bottom: 1px solid var(--vp-border); color: #fff; z-index: 10; }
 .vp-back-btn { cursor: pointer; font-size: 18px; margin-right: 15px; color: #fff; }
 .vp-nav-actions { margin-left: auto; display: flex; gap: 15px; }
 .vp-nav-btn { cursor: pointer; font-size: 16px; color: #fff; }
@@ -89,7 +82,7 @@
 .vp-chat-bubble { max-width: 80%; padding: 10px 15px; border-radius: 18px; font-size: 14px; line-height: 1.4; position: relative; word-wrap: break-word; }
 .vp-chat-bubble img { max-width: 100%; border-radius: 10px; margin-top: 5px; }
 
-/* Rich Media Cards (Slip, Location, Voice) */
+/* Rich Media Cards */
 .vp-slip-card { background: #fff; color: #333; padding: 15px; border-radius: 12px; box-shadow: 0 4px 10px rgba(0,0,0,0.1); width: 200px; text-align: center; border-top: 5px solid #34c759; }
 .vp-slip-card .bank-logo { font-size: 24px; color: #34c759; margin-bottom: 10px; }
 .vp-slip-card .amount { font-size: 20px; font-weight: bold; color: #1a1a1a; margin: 10px 0; }
@@ -112,9 +105,20 @@
 .theme-black .vp-chat-bubble.ai { background: #1c1c1e; color: #fff; border: 1px solid #333; align-self: flex-start; border-bottom-left-radius: 4px; }
 
 /* Input Area */
-.vp-chat-input-area { padding: 10px; display: flex; align-items: center; gap: 10px; background: rgba(255, 255, 255, 0.15); backdrop-filter: blur(15px); border-top: 1px solid var(--vp-border); z-index: 10; }
+.vp-chat-input-area { padding: 10px; display: flex; align-items: center; gap: 10px; background: rgba(255, 255, 255, 0.15); backdrop-filter: blur(15px); border-top: 1px solid var(--vp-border); z-index: 10; position: relative; }
 .vp-chat-input-area input { flex: 1; border: 1px solid rgba(255,255,255,0.3); border-radius: 20px; padding: 8px 15px; background: rgba(0,0,0,0.5); color: #fff; }
 .vp-action-btn { color: #fff; cursor: pointer; font-size: 20px; }
+
+/* Plus Menu (แก้ไขบั๊กโดนซ่อน) */
+.vp-plus-menu {
+    display: none; position: absolute; bottom: 60px; left: 10px;
+    background: rgba(30,30,30,0.95); backdrop-filter: blur(10px);
+    border: 1px solid var(--vp-border); border-radius: 15px;
+    padding: 10px; width: 200px; z-index: 9999; box-shadow: 0 10px 20px rgba(0,0,0,0.5);
+}
+.vp-plus-menu.active { display: block; }
+.vp-plus-item { padding: 10px; border-bottom: 1px solid var(--vp-border); cursor: pointer; font-size: 14px; color: #fff; }
+.vp-plus-item:last-child { border-bottom: none; }
 
 /* Timeline (IG & Twitter) */
 .vp-timeline-list { padding: 15px; display: flex; flex-direction: column; gap: 15px; overflow-y: auto; flex: 1; }
@@ -129,11 +133,6 @@
 .vp-tl-btn { background: none; border: none; color: #007aff; cursor: pointer; font-size: 12px; font-weight: 600; }
 .vp-tl-btn.sent { color: #34c759; cursor: default; }
 
-/* Twitter Themes */
-.tw-theme-light .vp-tl-item { background: #ffffff; color: #000; border-color: #e1e8ed; }
-.tw-theme-light .vp-tl-username { color: #657786; }
-.tw-theme-light .vp-tl-actions { border-color: #e1e8ed; }
-
 /* Library Modal */
 .vp-library-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 10px; margin-top: 10px; }
 .vp-lib-item { position: relative; cursor: pointer; border-radius: 8px; overflow: hidden; border: 2px solid transparent; }
@@ -143,3 +142,9 @@
 
 /* Export Button */
 #vp-export-btn-outer { position: absolute; bottom: -60px; left: 50%; transform: translateX(-50%); width: 90%; padding: 12px; background: #34c759; color: #fff; text-align: center; border-radius: 20px; cursor: pointer; font-weight: 600; box-shadow: 0 4px 15px rgba(0,0,0,0.3); z-index: 9002; }
+
+@media (max-width: 768px) {
+    #vp-container { width: 100vw; height: 100vh; max-height: none; top: 0; left: 0; transform: none; border-radius: 0; padding: 0; }
+    #vp-screen { border-radius: 0; }
+    #vp-export-btn-outer { bottom: 20px; }
+}
