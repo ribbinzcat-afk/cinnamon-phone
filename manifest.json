@@ -1,0 +1,10 @@
+{
+    "name": "cinnamon-phone",
+    "display_name": "🤍 Cinnamon Phone",
+    "description": "A minimalist virtual phone extension for RP. Includes Messaging, Insta, and Twitter features.",
+    "version": "1.0.0",
+    "author": "Assistant",
+    "js": "index.js",
+    "css": "style.css",
+    "dependencies": []
+}
