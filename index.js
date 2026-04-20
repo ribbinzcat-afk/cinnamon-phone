@@ -2,7 +2,7 @@
 import { extension_settings, getContext } from "../../../extensions.js";
 import { saveChatDebounced } from '../../../../script.js';
 
-const EXTENSION_NAME = "st-virtual-phone";
+const EXTENSION_NAME = "cinnamon-phone";
 const DEFAULT_SETTINGS = {
     phoneColor: "#000000",
     iconColor: "#ffffff",
