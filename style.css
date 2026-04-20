@@ -1,5 +1,5 @@
 /* st-virtual-phone/style.css */
-@import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap');
 
 :root {
     --vp-font: 'Inter', sans-serif;
@@ -9,39 +9,34 @@
     --vp-border: rgba(255,255,255,0.2);
 }
 
-/* Floating Button */
+/* Floating Button (Draggable) */
 #vp-floating-btn {
     position: fixed; top: 50%; right: 20px;
     width: 60px; height: 60px;
     background-color: var(--vp-bg); border-radius: 50%;
     box-shadow: 0 4px 12px rgba(0,0,0,0.15);
     display: flex; justify-content: center; align-items: center;
-    cursor: pointer; z-index: 9000;
-    transition: background-color 0.3s, transform 0.2s;
-    font-size: 24px; color: #333;
+    cursor: grab; z-index: 9000; font-size: 24px; color: #333;
 }
-#vp-floating-btn:hover { background-color: #f0f0f0; }
+#vp-floating-btn:active { cursor: grabbing; }
+#vp-floating-btn.vp-notify { animation: vp-shake 0.5s ease-in-out infinite alternate; }
+@keyframes vp-shake { 0% { transform: rotate(0deg); } 25% { transform: rotate(-5deg); } 75% { transform: rotate(5deg); } 100% { transform: rotate(0deg); } }
+
+.vp-badge-main {
+    position: absolute; top: 0; right: 0;
+    width: 18px; height: 18px; background: #ff3b30;
+    border-radius: 50%; color: white; font-size: 10px;
+    display: none; justify-content: center; align-items: center; font-weight: bold;
+}
 
 /* Phone Container */
 #vp-container {
-    position: fixed;
-    top: 5vh; /* ขยับตามความสูงจอ */
-    left: 50%;
-    transform: translateX(-50%);
-    width: 360px;
-    height: 85vh; /* ยืดหดตามจอ */
-    max-height: 850px;
-    min-height: 500px;
-    background-color: #000;
-    border-radius: 40px;
-    box-shadow: 0 20px 40px rgba(0,0,0,0.3);
-    z-index: 9001;
-    display: none;
-    padding: 10px;
-    font-family: var(--vp-font);
+    position: fixed; top: 5vh; left: 50%; transform: translateX(-50%);
+    width: 360px; height: 85vh; max-height: 850px; min-height: 500px;
+    background-color: #000; border-radius: 40px;
+    box-shadow: 0 20px 40px rgba(0,0,0,0.3); z-index: 9001;
+    display: none; padding: 10px; font-family: var(--vp-font);
 }
-
-/* Phone Screen */
 #vp-screen {
     position: relative; width: 100%; height: 100%;
     background-color: #1a1a1a; border-radius: 30px;
@@ -51,135 +46,100 @@
 /* Notch & Header */
 .vp-header {
     height: 30px; width: 100%; position: absolute; top: 0; left: 0;
-    z-index: 10; cursor: grab; display: flex; justify-content: center;
+    z-index: 20; cursor: grab; display: flex; justify-content: center;
 }
-.vp-notch {
-    width: 120px; height: 25px; background-color: #000;
-    border-bottom-left-radius: 15px; border-bottom-right-radius: 15px;
-}
+.vp-notch { width: 120px; height: 25px; background-color: #000; border-bottom-left-radius: 15px; border-bottom-right-radius: 15px; }
 
 /* App Views */
-.vp-app-view {
-    display: none; width: 100%; height: 100%;
-    flex-direction: column; padding-top: 40px;
-    background-size: cover; background-position: center;
-    color: #fff;
-}
+.vp-app-view { display: none; width: 100%; height: 100%; flex-direction: column; background-size: cover; background-position: center; color: #fff; }
 .vp-app-view.active { display: flex; }
 
-/* Home Screen */
-#vp-app-home { padding: 50px 20px 20px 20px; }
-.vp-avatar-container { text-align: center; margin-bottom: 30px; }
-.vp-avatar-container img {
-    width: 80px; height: 80px; border-radius: 50%;
-    border: 2px solid rgba(255,255,255,0.5); object-fit: cover;
+/* Top Nav (ขยายเต็มขอบบน) */
+.vp-top-nav {
+    display: flex; align-items: center; padding: 40px 15px 10px 15px; /* คลุม Notch */
+    background: rgba(255, 255, 255, 0.15); backdrop-filter: blur(15px);
+    border-bottom: 1px solid var(--vp-border); color: #fff; z-index: 10;
 }
+.vp-back-btn { cursor: pointer; font-size: 18px; margin-right: 15px; color: #fff; }
+.vp-nav-actions { margin-left: auto; display: flex; gap: 15px; }
+.vp-nav-btn { cursor: pointer; font-size: 16px; color: #fff; }
+
+/* Home Screen */
+#vp-app-home { padding: 60px 20px 20px 20px; }
+.vp-avatar-container { text-align: center; margin-bottom: 30px; }
+.vp-avatar-container img { width: 80px; height: 80px; border-radius: 50%; border: 2px solid rgba(255,255,255,0.5); object-fit: cover; }
 .vp-app-grid { display: grid; grid-template-columns: repeat(4, 1fr); gap: 15px; }
-.vp-app-icon { display: flex; flex-direction: column; align-items: center; cursor: pointer; font-size: 12px; text-shadow: 0 1px 3px rgba(0,0,0,0.8); }
+.vp-app-icon { position: relative; display: flex; flex-direction: column; align-items: center; cursor: pointer; font-size: 12px; text-shadow: 0 1px 3px rgba(0,0,0,0.8); }
 .vp-app-icon-box { width: 50px; height: 50px; border-radius: 12px; display: flex; justify-content: center; align-items: center; font-size: 24px; margin-bottom: 5px; }
 .vp-app-icon-box.msg { background: #34c759; color: #fff; }
 .vp-app-icon-box.ig { background: linear-gradient(45deg, #f09433 0%, #e6683c 25%, #dc2743 50%, #cc2366 75%, #bc1888 100%); color: #fff; }
 .vp-app-icon-box.tw { background: #1da1f2; color: #fff; }
 .vp-app-icon-box.set { background: #8e8e93; color: #fff; }
-
-/* Top Nav (Overlay) */
-.vp-top-nav {
-    display: flex; align-items: center; padding: 10px 15px;
-    background: rgba(255, 255, 255, 0.15);
-    backdrop-filter: blur(15px);
-    border-bottom: 1px solid var(--vp-border);
-    color: #fff;
-}
-.vp-back-btn { cursor: pointer; font-size: 18px; margin-right: 15px; color: #fff; }
-.vp-nav-actions { margin-left: auto; display: flex; gap: 10px; }
-.vp-nav-btn { cursor: pointer; font-size: 16px; color: #fff; }
+.vp-app-badge { position: absolute; top: -5px; right: 5px; background: #ff3b30; color: #fff; border-radius: 50%; width: 18px; height: 18px; font-size: 10px; display: none; justify-content: center; align-items: center; font-weight: bold; box-shadow: 0 2px 4px rgba(0,0,0,0.3); }
 
 /* Form Inputs */
-.vp-input-group { padding: 15px; display: flex; flex-direction: column; gap: 10px; overflow-y: auto;}
+.vp-input-group { padding: 15px; display: flex; flex-direction: column; gap: 10px; overflow-y: auto; flex: 1; }
 .vp-label { font-size: 12px; color: rgba(255,255,255,0.8); margin-bottom: -5px; }
-.vp-input {
-    width: 100%; padding: 10px; border: 1px solid var(--vp-border);
-    border-radius: 10px; font-family: var(--vp-font);
-    background: rgba(0,0,0,0.4); color: #fff;
-}
-.vp-input::placeholder { color: rgba(255,255,255,0.5); }
-.vp-btn { padding: 10px; background: var(--vp-primary); color: #fff; border: none; border-radius: 10px; cursor: pointer; font-weight: 600; }
-.vp-btn-danger { background: #ff3b30; }
-.vp-img-preview { width: 100%; max-height: 150px; object-fit: cover; border-radius: 10px; display: none; border: 1px solid var(--vp-border); }
+.vp-input { width: 100%; padding: 10px; border: 1px solid var(--vp-border); border-radius: 10px; font-family: var(--vp-font); background: rgba(0,0,0,0.5); color: #fff; }
+.vp-btn { padding: 10px; background: var(--vp-primary); color: #fff; border: none; border-radius: 10px; cursor: pointer; font-weight: 600; text-align: center; }
+.vp-btn-secondary { background: rgba(255,255,255,0.2); }
 
 /* Message App */
 .vp-chat-area { flex: 1; overflow-y: auto; padding: 15px; display: flex; flex-direction: column; gap: 10px; }
-.vp-chat-bubble { max-width: 80%; padding: 10px 15px; border-radius: 18px; font-size: 14px; line-height: 1.4; }
+.vp-chat-bubble { max-width: 80%; padding: 10px 15px; border-radius: 18px; font-size: 14px; line-height: 1.4; position: relative; word-wrap: break-word; }
+.vp-chat-bubble img { max-width: 100%; border-radius: 10px; margin-top: 5px; }
 
-/* Themes */
-/* 1. ขาว-ฟ้า (Light-Blue) */
+/* Rich Media Cards (Slip, Location, Voice) */
+.vp-slip-card { background: #fff; color: #333; padding: 15px; border-radius: 12px; box-shadow: 0 4px 10px rgba(0,0,0,0.1); width: 200px; text-align: center; border-top: 5px solid #34c759; }
+.vp-slip-card .bank-logo { font-size: 24px; color: #34c759; margin-bottom: 10px; }
+.vp-slip-card .amount { font-size: 20px; font-weight: bold; color: #1a1a1a; margin: 10px 0; }
+.vp-slip-card .details { font-size: 11px; color: #666; border-top: 1px dashed #ccc; padding-top: 10px; }
+
+.vp-loc-card { background: #fff; border-radius: 12px; overflow: hidden; width: 200px; box-shadow: 0 4px 10px rgba(0,0,0,0.1); }
+.vp-loc-card .map-bg { background: #e5e5ea; height: 80px; display: flex; justify-content: center; align-items: center; font-size: 30px; color: #ff3b30; }
+.vp-loc-card .loc-info { padding: 10px; font-size: 12px; color: #333; font-weight: 500; }
+
+.vp-voice-card { background: var(--vp-primary); color: #fff; padding: 10px 15px; border-radius: 20px; display: flex; flex-direction: column; min-width: 150px; cursor: pointer; }
+.vp-voice-card .player { display: flex; align-items: center; gap: 10px; }
+.vp-voice-card .wave { flex: 1; height: 4px; background: rgba(255,255,255,0.5); border-radius: 2px; position: relative; }
+.vp-voice-card .wave::after { content: ''; position: absolute; left: 0; top: 0; height: 100%; width: 30%; background: #fff; border-radius: 2px; }
+.vp-voice-text { margin-top: 10px; font-size: 12px; font-style: italic; background: rgba(0,0,0,0.1); padding: 8px; border-radius: 8px; display: none; }
+
+/* Chat Themes */
 .theme-light-blue .vp-chat-bubble.me { background: #007aff; color: #fff; align-self: flex-end; border-bottom-right-radius: 4px; }
-.theme-light-blue .vp-chat-bubble.other { background: #e5e5ea; color: #000; align-self: flex-start; border-bottom-left-radius: 4px; }
-/* 2. ดำ (Black) */
+.theme-light-blue .vp-chat-bubble.ai { background: #e5e5ea; color: #000; align-self: flex-start; border-bottom-left-radius: 4px; }
 .theme-black .vp-chat-bubble.me { background: #000000; color: #fff; border: 1px solid #333; align-self: flex-end; border-bottom-right-radius: 4px; }
-.theme-black .vp-chat-bubble.other { background: #1c1c1e; color: #fff; border: 1px solid #333; align-self: flex-start; border-bottom-left-radius: 4px; }
-/* 3. ดำ-เทา (Dark-Grey) */
-.theme-dark-grey .vp-chat-bubble.me { background: #2c2c2e; color: #fff; align-self: flex-end; border-bottom-right-radius: 4px; }
-.theme-dark-grey .vp-chat-bubble.other { background: #3a3a3c; color: #fff; align-self: flex-start; border-bottom-left-radius: 4px; }
-/* 4. เทา-ขาว (Dark-White) */
-.theme-dark-white .vp-chat-bubble.me { background: #ffffff; color: #000; align-self: flex-end; border-bottom-right-radius: 4px; }
-.theme-dark-white .vp-chat-bubble.other { background: #8e8e93; color: #fff; align-self: flex-start; border-bottom-left-radius: 4px; }
+.theme-black .vp-chat-bubble.ai { background: #1c1c1e; color: #fff; border: 1px solid #333; align-self: flex-start; border-bottom-left-radius: 4px; }
 
-/* Input Area (Overlay) */
-.vp-chat-input-area {
-    padding: 10px; display: flex; align-items: center; gap: 10px;
-    background: rgba(255, 255, 255, 0.15); backdrop-filter: blur(15px);
-    border-top: 1px solid var(--vp-border);
-}
-.vp-chat-input-area input {
-    flex: 1; border: 1px solid rgba(255,255,255,0.3); border-radius: 20px;
-    padding: 8px 15px; background: rgba(0,0,0,0.3); color: #fff;
-}
-.vp-chat-input-area input::placeholder { color: rgba(255,255,255,0.6); }
+/* Input Area */
+.vp-chat-input-area { padding: 10px; display: flex; align-items: center; gap: 10px; background: rgba(255, 255, 255, 0.15); backdrop-filter: blur(15px); border-top: 1px solid var(--vp-border); z-index: 10; }
+.vp-chat-input-area input { flex: 1; border: 1px solid rgba(255,255,255,0.3); border-radius: 20px; padding: 8px 15px; background: rgba(0,0,0,0.5); color: #fff; }
 .vp-action-btn { color: #fff; cursor: pointer; font-size: 20px; }
 
-/* Timeline Items */
+/* Timeline (IG & Twitter) */
 .vp-timeline-list { padding: 15px; display: flex; flex-direction: column; gap: 15px; overflow-y: auto; flex: 1; }
-.vp-tl-item { background: rgba(0,0,0,0.5); border: 1px solid var(--vp-border); border-radius: 12px; padding: 12px; position: relative; }
-.vp-tl-img { width: 100%; border-radius: 8px; margin-bottom: 8px; }
-.vp-tl-text { font-size: 13px; color: #ddd; margin-bottom: 5px; }
-.vp-tl-actions { display: flex; justify-content: space-between; margin-top: 10px; border-top: 1px solid var(--vp-border); padding-top: 8px; }
-.vp-tl-btn { background: none; border: none; color: #007aff; cursor: pointer; font-size: 12px; }
-.vp-tl-btn.del { color: #ff3b30; }
+.vp-tl-item { background: rgba(0,0,0,0.6); border: 1px solid var(--vp-border); border-radius: 12px; padding: 15px; }
+.vp-tl-header { display: flex; align-items: center; gap: 10px; margin-bottom: 10px; }
+.vp-tl-header img { width: 30px; height: 30px; border-radius: 50%; object-fit: cover; }
+.vp-tl-name { font-weight: 600; font-size: 14px; }
+.vp-tl-username { font-size: 12px; color: #aaa; }
+.vp-tl-img { width: 100%; border-radius: 8px; margin-bottom: 10px; }
+.vp-tl-text { font-size: 13px; margin-bottom: 10px; }
+.vp-tl-actions { display: flex; justify-content: space-between; border-top: 1px solid var(--vp-border); padding-top: 10px; margin-top: 10px; }
+.vp-tl-btn { background: none; border: none; color: #007aff; cursor: pointer; font-size: 12px; font-weight: 600; }
+.vp-tl-btn.sent { color: #34c759; cursor: default; }
 
-/* Export Prompt Button (Outside) */
-#vp-export-btn-outer {
-    position: absolute;
-    bottom: -60px;
-    left: 50%;
-    transform: translateX(-50%);
-    width: 90%;
-    padding: 12px;
-    background: #34c759;
-    color: #fff;
-    text-align: center;
-    border-radius: 20px;
-    cursor: pointer;
-    font-weight: 600;
-    box-shadow: 0 4px 15px rgba(0,0,0,0.3);
-    z-index: 9002;
-    transition: background 0.2s;
-}
-#vp-export-btn-outer:hover { background: #2ea84b; }
+/* Twitter Themes */
+.tw-theme-light .vp-tl-item { background: #ffffff; color: #000; border-color: #e1e8ed; }
+.tw-theme-light .vp-tl-username { color: #657786; }
+.tw-theme-light .vp-tl-actions { border-color: #e1e8ed; }
 
-/* Plus Menu */
-.vp-plus-menu {
-    display: none; position: absolute; bottom: 60px; left: 10px;
-    background: rgba(30,30,30,0.95); backdrop-filter: blur(10px);
-    border: 1px solid var(--vp-border); border-radius: 15px;
-    padding: 10px; width: 200px; z-index: 100;
-}
-.vp-plus-menu.active { display: block; }
-.vp-plus-item { padding: 10px; border-bottom: 1px solid var(--vp-border); cursor: pointer; font-size: 14px; color: #fff; }
-.vp-plus-item:last-child { border-bottom: none; }
+/* Library Modal */
+.vp-library-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 10px; margin-top: 10px; }
+.vp-lib-item { position: relative; cursor: pointer; border-radius: 8px; overflow: hidden; border: 2px solid transparent; }
+.vp-lib-item:hover { border-color: var(--vp-primary); }
+.vp-lib-item img { width: 100%; height: 80px; object-fit: cover; display: block; }
+.vp-lib-del { position: absolute; top: 2px; right: 2px; background: rgba(255,0,0,0.8); color: white; border-radius: 50%; width: 20px; height: 20px; display: flex; justify-content: center; align-items: center; font-size: 10px; }
 
-@media (max-width: 768px) {
-    #vp-container { width: 100vw; height: 100vh; max-height: none; top: 0; left: 0; transform: none; border-radius: 0; padding: 0; }
-    #vp-screen { border-radius: 0; }
-    #vp-export-btn-outer { bottom: 20px; }
-}
+/* Export Button */
+#vp-export-btn-outer { position: absolute; bottom: -60px; left: 50%; transform: translateX(-50%); width: 90%; padding: 12px; background: #34c759; color: #fff; text-align: center; border-radius: 20px; cursor: pointer; font-weight: 600; box-shadow: 0 4px 15px rgba(0,0,0,0.3); z-index: 9002; }
